@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <math.h>
+#include "histogram.h"
 using namespace std;
 
 
@@ -14,29 +15,7 @@ vector <double> input_numbers ( size_t count)
     return result;
 }
 
-void find_minmax( const vector <double> &numbers, double& min, double& max)
-{
-    if(numbers.size() == 0)
-    {
-        return;
-    }
-    else
-    {
-        min = numbers[0];
-        max = numbers[0];
-        for(double number: numbers)
-        {
-            if(min > number)
-            {
-                min = number;
-            }
-            if (max < number)
-            {
-                max = number;
-            }
-        }
-    } // (здесь код поиска минимума и максимума)
-}
+
 
 vector <size_t> make_histogram( const vector<double>& numbers, size_t bin_count)
 {
@@ -147,15 +126,29 @@ show_histogram_svg(const vector<size_t>& bins)
     double top = 0;
     svg_begin(IMAGE_WIDTH,IMAGE_HEIGHT);
 
-    svg_text(TEXT_LEFT, TEXT_BASELINE, to_string(bins[0]));
-    svg_rect(TEXT_WIDTH, 0, bins[0] * BLOCK_WIDTH, BIN_HEIGHT);
+    const auto MAX_BIN_WIDTH = IMAGE_WIDTH - TEXT_WIDTH;
+    size_t max_bins_width = bins[0];
+    for (size_t bin : bins)
+    {
+        if (bin > max_bins_width)
+        {
+            max_bins_width = bin;
+        }
+    }
+    max_bins_width = max_bins_width * BLOCK_WIDTH;
 
     for (size_t bin : bins)
     {
-        const double bin_width = BLOCK_WIDTH * bin;
-        svg_text(TEXT_LEFT, top + TEXT_BASELINE, to_string(bin));
-        svg_rect(TEXT_WIDTH, top, bin_width, BIN_HEIGHT);
-        top += BIN_HEIGHT;
+        double bin_width = BLOCK_WIDTH * bin;
+        if (max_bins_width >= MAX_BIN_WIDTH)
+        {
+            bin_width = MAX_BIN_WIDTH * (bin_width / max_bins_width) - 1;
+        }
+
+
+    svg_text(TEXT_LEFT, TEXT_BASELINE, to_string(bins[0]));
+    svg_rect(TEXT_WIDTH, 0, bins[0] * BLOCK_WIDTH, BIN_HEIGHT);
+     top += BIN_HEIGHT;
     }
     svg_end();
 }
