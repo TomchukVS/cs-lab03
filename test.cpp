@@ -1,5 +1,5 @@
 #include "histogram.h"
-
+#include "svg.h"
 #include <cassert>
 
 void
@@ -42,7 +42,29 @@ find_minmax({}, min, max);
 assert(min == 0);
 assert(max == 0);
 }
+void
+test_size_high(){
+    size_t text_size = 55;
+    text_size = check_size(text_size);
+    assert(text_size == 0);
 
+}
+
+void
+test_size_low(){
+    size_t text_size = 2;
+    text_size = check_size(text_size);
+    assert(text_size == 0);
+
+}
+
+void
+test_size_normal(){
+    size_t text_size = 24;
+    text_size = check_size(text_size);
+    assert(text_size == 24);
+
+}
 
 int
 main() {
@@ -51,4 +73,8 @@ main() {
     test_simular();
     test_one();
     test_null ();
+    test_size_normal();
+    test_size_high();
+    test_size_low();
+
 }
