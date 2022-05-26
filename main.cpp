@@ -16,23 +16,31 @@ input_numbers(istream& in, size_t count)
     }
     return result;
 }
-Input read_input(istream& in) {
+Input read_input(istream& in, bool prompt)
+{
     Input data;
-
     size_t number_count;
-    cerr << "Enter number count: ";
-
+    if (prompt)
+    {
+        cerr << "Enter number count: ";
+    }
     in >> number_count;
 
-    cerr << "Enter numbers: ";
+    if(prompt)
+    {
+        cerr << "Enter numbers: ";
+    }
     data.numbers = input_numbers(in, number_count);
 
-    cerr << "Enter bin count: ";
-    size_t bin_count;
-    cin >> bin_count;
+    if(prompt)
+    {
+        cerr << "Enter bin count: ";
+    }
+    in >> data.bin_count;
 
     return data;
 }
+
 
 
 void show_histogramm_text(const vector<size_t>& bins)
@@ -81,12 +89,8 @@ void show_histogramm_text(const vector<size_t>& bins)
 int main()
 {
     Input data;
-    data = read_input(cin) ;
-//Расчет гистограммы
-    const auto bins = make_histogramm (data);
-
-//Вывод гистограммы
+    const auto input = read_input(cin, true);
+    const auto bins = make_histogramm(input);
     show_histogramm_svg(bins);
-
     return 0;
 }
