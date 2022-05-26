@@ -5,10 +5,6 @@
 
 using namespace std;
 
-struct Input {
-    vector<double> numbers;
-    size_t bin_count;
-};
 
 vector<double>
 input_numbers(istream& in, size_t count)
@@ -37,38 +33,7 @@ Input read_input(istream& in) {
 
     return data;
 }
-vector<size_t> make_histogramm(Input data)
-{
 
-    const vector<double>& numbers = data.numbers;
-    size_t& bin_count = data.bin_count;
-
-
-    double min, max;
-    find_minmax(numbers, min, max);
-
-    vector<size_t> bins(bin_count, 0);
-    double bin_size = (max - min) / bin_count;
-    for (size_t i = 0; i < numbers.size(); i++)
-    {
-        bool found = false;
-        for(size_t j = 0; j < (bin_count - 1) && !found; j++)
-        {
-            auto lo = min + j * bin_size;
-            auto hi = min + (j + 1) * bin_size;
-            if (lo <= numbers[i] && numbers[i] < hi)
-            {
-                bins[j]++;
-                found = true;
-            }
-        }
-        if (!found)
-        {
-            bins[bin_count - 1]++;
-        }
-    }
-    return bins;
-}
 
 void show_histogramm_text(const vector<size_t>& bins)
 {
