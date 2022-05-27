@@ -2,7 +2,7 @@
 #include <vector>
 #include "histogram.h"
 #include "svg.h"
-#include <curl3/curl.h>
+#include <curl/curl.h>
 
 using namespace std;
 
@@ -87,8 +87,18 @@ void show_histogramm_text(const vector<size_t>& bins)
 
 
 
-int main()
+int main(int argc, char* argv[])
 {
+if(argc > 1)
+{
+cout << "argc = " << argc <<'\n';
+for(size_t i = 0; i < argc; i++)
+{
+cout << "argv[" << i << "]= " << argv[i] << '\n';
+}
+return 0;
+}
+
     curl_global_init(CURL_GLOBAL_ALL);
     Input data;
     const auto input = read_input(cin, true);
