@@ -89,20 +89,16 @@ void show_histogramm_text(const vector<size_t>& bins)
 
 int main(int argc, char* argv[])
 {
-if(argc > 1)
-{
-cout << "argc = " << argc <<'\n';
-for(size_t i = 0; i < argc; i++)
-{
-cout << "argv[" << i << "]= " << argv[i] << '\n';
-}
-return 0;
-}
-
-    curl_global_init(CURL_GLOBAL_ALL);
-    Input data;
-    const auto input = read_input(cin, true);
-    const auto bins = make_histogramm(input);
-    show_histogramm_svg(bins);
-    return 0;
-}
+    if(argc > 1)
+    {
+        curl_global_init(CURL_GLOBAL_ALL);
+        CURL *curl = curl_easy_init();
+        if(curl)
+        {
+            CURLcode res;
+            curl_easy_setopt(curl, CURLOPT_URL, argv[1]);
+            res = curl_easy_perform(curl);
+            curl_easy_cleanup(curl);
+        }
+        return 0;
+    } }
