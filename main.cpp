@@ -5,6 +5,7 @@
 #include <curl/curl.h>
 #include <sstream>
 #include <string>
+#include <windows.h>
 using namespace std;
 
 
@@ -90,6 +91,9 @@ return read_input(buffer, false);
 int
 main(int argc, char* argv[])
 {
+    DWORD info = GetVersion();
+    printf("System info: %u or 0x%x\n", info, info);
+    return 0;
 Input input;
 if (argc > 1)
 {
