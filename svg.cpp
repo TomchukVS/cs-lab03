@@ -29,6 +29,17 @@ void svg_end()
     cout << "</svg>\n";
 }
 
+
+const auto IMAGE_WIDTH = 400;
+const auto IMAGE_HEIGHT = 300;
+const auto TEXT_LEFT = 20;
+const auto TEXT_BASELINE = 20;
+const auto TEXT_WIDTH = 50;
+const auto BIN_HEIGHT = 30;
+const auto BLOCK_WIDTH = 10;
+const auto RECT_STROKE = "black";
+const auto RECT_FILL = "#000000";
+
 void show_histogramm_svg(const vector<size_t>& bins)
 {
     size_t max_bin = bins[0];
